@@ -179,4 +179,4 @@ Maybe WE (me and you) can build the best **Python package for handle data on MyS
  @uthor: IDELFRIDES JORGE | Mail me by idelfridesjorgepapai@gmail.com
 
  FOLLOW ME ON GITHUB: ENG. [IDELFRIDES JORGE](https://github.com/idelfrides/) 
->>>>>>> 7c5c8586248ff3461733f5b5f7cd22debdc368fb
+
