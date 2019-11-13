@@ -1,0 +1,207 @@
+
+------------------------------------------------------------
+ATENÇÃO: LEIA ESTE ARQUIVO ANTES DE QUALQUER OUTRA COISA.
+------------------------------------------------------------
+-------------------------------
+Informações do Projeto
+-------------------------------
+Este é um aplicativo criado para trabalhar com o MySQL DB no Python 3.
+
+O pacote usa POO e quatro módulos / arquivos python.
+Todos eles têm uma classe com o mesmo nome de arquivo, as classe contém 
+muitos métodos usados ??para criar esta aplicação, exceto process_data_form.py.
+
+ModuleMySQLdb.py - módulo de configuração e conexão ao servidor local, criação e alteração 
+                   da estrutura do banco de dados e tabelas.
+HandleDataFromTerminal.py - Módulo de processamento de dados de entrada via terminal Run.
+Crud_build.py - Módulo CRUD (CREATE | READ | UPDATE | DELETE): responsável por indexar e
+                manipular registros em tabelas.
+process_data_form.py - módulo responsável pelo processamento de dados vindos de  um formulário HTML.
+
+---------------------------------
+Informações de execução
+---------------------------------
+Nome da aplicação: ijpymysql
+
+Descrição: Este projeto é meu, um dos mais importantes projetos. É um pacote para manipular dados no MySQL DB com python.
+
+@utor: Engenheiro Idelfrides Jorge
+
+Data de início: jul. 25 de janeiro de 2019
+
+Data finalizada: jul. 29 de janeiro de 2019
+
+Licença: no arquivo README.md
+
+----------------------------------
+Informação técnica
+----------------------------------
+Intérprete de Python:
+
+-> Python 3.6.2
+
+-> Caminho no Windows: C: \ Users \ idelf \ AppData \ Local \ Programas \ Python \ Python36 \ python.exe
+
+Driver Python para banco de dados MySQL:
+
+-> PyMySQL v0.9.3
+
+-> PyMySQLDB v0.0.2 (não usado)
+
+- Codificação: UTF-8 -
+
+tipo de conteúdo: script / python; utf-8
+
+-------------------------------------------
+COMO USAR: Passos para usar este pacote
+-------------------------------------------
+Siga os próximos passos para usar este pacote em seu projeto python ou para fazer um teste simples e aprender mais.
+
+Passo 1:
+Baixe o ijpymysql e descompacte a pasta. Mova o pacote para o seu projeto python.
+
+Passo 2:
+Leia o arquivo LEIAME ou README integralmente, ou por outro caminho,
+você pode fazer isso aqui no repositório do github. Depois disso, 
+dê uma olhada para entender a estrutura do projeto, 
+para entender principalmente os campos da tabela. 
+Então, neste ponto, você pode mudar alguma coisa.
+
+Passo 3:
+Se você quiser, pode fazer algumas modificações no pacote.
+Se não, então, você só precisa usá-lo como eu vou lhe dizer em seguida.
+Crie um arquivo python para ser o principal. Crie um método dentro desse arquivo. 
+Este vai ser, portanto, o principal método do seu projeto python.
+Então, após isso, siga os próximos passos.
+
+Passo 4:
+Importe módulos dentro do módulo de tempo ijpymysql e 
+módulo do tempo do python que você usará.
+
+Exemplo: from ijpymysql import ModuleMySQLdb as mdb
+Exemplo: import time as t
+
+Passo 5:
+Dentro do método principal você tem que criar um objeto de módulo 
+que você precise precisar imediatamente ou para todos os módulos, 
+(eu recomendo o primeiro caminho). Dê uma olhada em um exemplo real.
+
+Exemplo: mdbo = mdb.ModuleMySQLdb()
+
+Passo 6:
+Chame o método para configurar uma conexão ao servidor local.
+
+Exemplo: conec, cursor = mdbo.set_conec_with_db ()
+
+# ----------------------------------------------
+# set_conec_with_db ()
+# -----
+# Este método configura uma aconceção para o localhost
+# (servidor local), com um 'banco de dados' criado.
+# É necessário definir um banco de dados. Este método é apenas
+# chamado no seu módulo/arquivo principal, o mesmo
+# usado para testar o pacote 'ijpymyql'.
+# return 'conection' com db e 'cursor'
+# para executar o consultas.
+# ----------------------------------------------
+
+Passo 7:
+
+Verifique a existência do banco de dados. Certifique-se de que o db foi 
+criado com sucesso. Para isso, chame o método  verification(cursor, 'db').
+
+Exemplo: resp = mdbo.verification (cursor, 'db')
+
+# ----------------------------------------------
+# verificação (cursor, entidade)
+# -----
+# Este método verifica se a entidade (string 'db' ou tabela, 'tb') é realmente
+# existe no servidor local.
+# Retorna 1 se a entidade existir ou
+# 0 se não existir.
+# ----------------------------------------------
+
+Se resp for 0, você precisará criar um novo banco de dados. 
+Para fazer isso, chame o método create_db(self, cur_con, db) como próximo.
+
+Exemplo: mdbo.create_db(cursor, mdbo.appdb)
+# ----------------------------------------------
+# create_db (cursor, mdbo.appdb)
+# ---------
+# Esse método cria um banco de dados a ser usado
+# no seu módulo. O banco de dados é definido por você / usuário como
+# um atributo do módulo ModuleMySQLdb
+# (veja o módulo no pacote).
+# ----------------------------------------------
+
+Passo 8:
+
+Ative um banco de dados para ser usado no seu aplicativo. 
+Para isso, chame o método activate_db(cursor).
+
+Exemplo: mdbo.activate_db (cursor).
+# ----------------------------------------------
+# activate_db (cursor)
+# --------
+# Este método ativa o DB a ser usado para testar
+# este pacote.
+# ----------------------------------------------
+
+Passo 9:
+
+Agora, chame o método de verificação para certificar-se de que alguma tabela exista.
+
+Exemplo: resp = mdbo.verification (cursor, 'tb')
+# ----------------------------------------------
+# verificação (cursor, entidade)
+# --------
+# Este é o mesmo método descrito no Passo 7.
+# ----------------------------------------------
+
+Se resp for 0, você precisará criar uma nova tabela.
+Para fazer isso, chame o método create_table (self, cur, mytb) como segue.
+
+Exemplo: mdbo.create_table (cursor, mdbo.dev_table)
+
+Passo 10:
+
+Finalmente, você deve alterar a tabela para excluir alguns atributos e depois adicionar outros.
+Para fazer isso, chame alter_table (self, cur, mytb, oper, atrib).
+
+Exemplo: mdbo.alter_table (cursor, mdbo.dev_table, 'drop', 'age')
+
+# ------------------------------------------------- -----
+# alter_table (cursor, mdbo.dev_table, 'drop', 'age')
+# -------------
+# Este método altera uma tabela presente no banco de dados.
+# O método fornece 3 operações: adicionar, eliminar
+# e modificar. As tabelas e operações são
+# definidas por você / usuário como um atributo (tabelas)
+# do módulo ModuleMySQLdb (consulte o módulo no pacote).
+# ------------------------------------------------- -----
+
+Execute o método alter table para alterar dois atributos:
+idade e sexo da seguinte forma:
+
+# ----------------------------------
+# drop: age | gênero
+# ----------------------------------
+mdbo.alter_table (cursor, mdbo.dev_table, 'drop', 'age')
+mdbo.alter_table (cursor, mdbo.dev_table, 'drop', 'gender')
+
+# ----------------------------------
+# add: funcao (role) | endereço
+# ----------------------------------
+mdbo.alter_table (cursor, mdbo.dev_table, 'add', 'role')
+mdbo.alter_table (cursor, mdbo.dev_table, 'add', 'adress')
+
+
+Após esses passos, você está agora livre para brincar com o pacote como quiser.
+
+--------------------
+Contribuições
+---------------------
+Talvez nós(eu e você) possamos construir o melhor pacote Python para manipular
+dados no banco de dados MySQL para ajudar outros desenvolvedores pythpn a administrar 
+seu trabalho. Portanto, sinta-se à vontade para iniciar um bate-papo ou enviar 
+solicitações de recebimento.
