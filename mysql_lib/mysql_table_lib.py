@@ -218,5 +218,5 @@ class TableLib(HelperModule):
                 print('\n Operation done SUCCESSFULY')
             except Exception as error:
                 print('Error by tring to REMOVE {} as UNIQUE. \n\n Server said: {}'.format(attr, error))
-       
+    
 
