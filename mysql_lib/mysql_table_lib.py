@@ -10,7 +10,7 @@ class TableLib(HelperModule):
 
     def __init__(self):
         self.hmo = HelperModule()
-    
+
     def tb_verification(self, cursor, tb):
         """
             This method verify if the table
@@ -41,7 +41,7 @@ class TableLib(HelperModule):
             print('Error by try to show all tables. \n Server said: {}'.format(
                 error)
             )
-        
+    
     def create_table(self, cursor, mytb):
         """
             This method create a table on the DB 
