@@ -2,10 +2,7 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
-
-
 from utils import HelperModule
-import pymysql
 
 
 class TableLib(HelperModule):    

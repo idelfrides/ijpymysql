@@ -32,21 +32,19 @@ from utils import HelperModule
 import pymysql
 
 
-class MySQLDBLib(object):    
+class MySQLDBLib(HelperModule):    
     """
         This class is the my library for python
         appications working with MySQL DB.
         The class will create all methods needed to
         manage a db app and more other methods.
     """ 
-    
-    appdb = 'py_app_db'                
-    dev_table = 'developer'            
-    # manager_table = 'manager'       
-    # supervisor_table = 'supervisor'  
-
 
     def __init__(self):
+        self.appdb = 'py_app_db'                
+        self.dev_table = 'developer'            
+        # manager_table = 'manager'       
+        # supervisor_table = 'supervisor'  
         self.hmo = HelperModule()
         self.hmo.app_information()
 
@@ -161,3 +159,4 @@ class MySQLDBLib(object):
         except Exception as error:
             print('Error by tring to CLOSE the connection with MySQL server %s ', connec)
             print('\n\n Server said: {}'.format(error))
+

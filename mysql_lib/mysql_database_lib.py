@@ -2,9 +2,13 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+from utils import HelperModule
 
-class DBLib(object):    
+class DBLib(HelperModule):    
     """ Database lib object"""
+
+    def __init__(self):
+        self.hmo = HelperModule()
 
     def create_db(self, cursor, db):
         """
@@ -80,8 +84,34 @@ class DBLib(object):
                 print('\n Error try to activate DB {}'.format(db))
                 print('\n Server said: {}'.format(error))
 
+    def drop_database(self, connec, cursor, db):
+        """        
+            This method DROP a database exists.
 
-    def drop_database(self):
-        pass
-            
+           :param connec: connection with MySQL DB
+           :type connec: object of MySQL 
+           :param cursor: cursor of MySQL connection
+           :type cursor: object of MySQL connection
+           :param db: the name of database will be droped
+           :type db: string
+           :rtype: None
+        """
+        
+        # cur = self.set_conec_with_db()
+        option = self.hmo.info_danger('db', db)
+        
+        if option == 1:
+            sql = " DROP TABLE IF EXISTS " + db
+            try:
+                cursor.execute(sql)
+                print("\n Table {} was droped successfully. \n ".format(db))
+                connec.comit()
+            except Exception as erro:
+                print('\n Error try to DROP the table: {}'.format(db))
+                print('\n Server reponse: {}'.format(erro))
+        
+        if option == 0:
+            print('\n YOU CHOSE TO QUIT \n INTELIGENT DECISION.')
+    
+
 
