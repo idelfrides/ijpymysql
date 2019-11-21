@@ -4,7 +4,6 @@
 """ Test module """
 
 
-
 class UseMysqlLib(object):
     """ Test module """
 

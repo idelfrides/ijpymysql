@@ -6,105 +6,88 @@
 """
  ------------------------------------------------------
    ====  PACKAGE INFORMATION  ====
- App name: ijpymysql
+ Package name: ijpymysql
  Version: 1.0.0
  Description: module to handle data from MySQL
               DB with python 3.6
- @utor: Engineer Idelfrides Jorge
+ @utor: Idelfrides Jorge
+        Computer Engineer and software Developer.
  Date started: jul. 25th, 2019
  Date finished: jul. 29th, 2019
  License: on the README.md file
  Email: idelfridesjorgepapai@gmail.com
- GitHub: @idelfrides(https:\\github.com/idelfrides/)
+ GitHub: @idelfrides(https://github.com/idelfrides/)
  ------------------------------------------------------
    ====  TECHNICAL INFORMATION  ====
  Python Interpreter:
- --> Python 3.6.2
+    --> Python 3.7.3 by ENV
  Python driver for MySQL database:
-   --> PyMySQL v0.9.3
-   --> PyMySQLDB v0.0.2 (doesn't used)
+    --> PyMySQL v0.9.3
  -*- Coding: UTF-8 -*-
- content-type: script/python; utf-8
+     content-type: script/python; utf-8
  ------------------------------------------------------
 """
 
 from utils import HelperModule
-import pymysql          # mysql db driver
+import pymysql
 
 
 class MySQLDBLib(object):    
     """
-       ---------------------------------------------------
-          ====  OPERATIONAL INFORMATION  =====
-         This module will be my library for python
-         appications working with MysSQL DB.
-         The module will create all method needed to
-         manage a db app and more other methods.
-       ---------------------------------------------------
+        This class is the my library for python
+        appications working with MySQL DB.
+        The class will create all methods needed to
+        manage a db app and more other methods.
     """ 
     
+    appdb = 'py_app_db'                
+    dev_table = 'developer'            
+    # manager_table = 'manager'       
+    # supervisor_table = 'supervisor'  
 
-    appdb = 'py_app_db'         # define db name
-    dev_table = 'developer'     # define table name
-    # man_table = 'manager'     # define manager table
-    # sup_table = 'supervisor'  # define supervisor table
 
     def __init__(self):
-        """
-           -------------------------------------------------
-            The thunder init method inicialize and show
-            the module information to user via terminal by
-            calling method 'app_info()'
-           -------------------------------------------------
-           
-           :type self: auto reference parameter
-           :rtype: None
-        """
         self.hmo = HelperModule()
-        self.hmo.app_info()
+        self.hmo.app_information()
 
-    
-    def set_conection(self):
+
+    def set_connection(self):
         """
-           --------------------------------------------------
-             This method set conection to the local server,
-             with no 'database' created yet.
-             This method is only called on your main module,
-             the same used to test the 'ijpymyql' package.
-             Return  'connection' with db and 'cursor'
-                     to execute quereis.
-           --------------------------------------------------           
-           
-           :type self: auto reference parameter
-           :rtype: connection with MySQL | cursor of that connection
+            This method set a conection to the local server,
+            with no 'database' created yet.
+            This method is only called on your main module,
+            the same used to test the 'ijpymyql' package.
+            Return  'connection' with db and 'cursor' 
+            to execute quereis.
+            
+            :param self: auto reference parameter      
+            :type self: python reserved word
+            :rtype: connection with MySQL and cursor of that connection
         """
 
-        conec = pymysql.Connect(
+        conection = pymysql.Connect(
             host = 'localhost',
             user = 'root',
             password = '',
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
         )
-        cursor_conec = conec.cursor()
-        self.db_con = conec
-        return conec, cursor_conec
+        cursor = conection.cursor()
+        self.db_con = conection
+        return conection, cursor
 
     
-    def set_conec_with_db(self):
+    def set_connec_with_db(self):
         """
-           ----------------------------------------------------------
-             This method set conection to the local server,
-             with a 'database' already exists. It need to set a DB.
-             It is only called on your main module,
-             the same used to test the 'ijpymyql' package.
-             Return 'conection' with db and 'cursor'
-             to execute quireis
-           -----------------------------------------------------------
+            This method set conection to the local server,
+            with a 'database' already exists. It need to set a DB.
+            It is only called on your main module,
+            the same used to test the 'ijpymyql' package.
+            Return 'conection' with db and 'cursor'
+            to make quireis.
         """      
         
-        # print("\n I AM A CONNECTION WITH A MySQL DB\n")
-        db_conection = pymysql.Connect(
+        conection = pymysql.Connect(
             host='localhost',
             user='root',
             password='',
@@ -112,29 +95,32 @@ class MySQLDBLib(object):
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
         )
-        cursor = db_conection.cursor()
-        return db_conection, cursor
+        cursor = conection.cursor()
+        return conection, cursor
 
     
-    def verification(self, cur, entity):
+    def verification(self, cursor, entity):
         """
-           -------------------------------------------------
-             This method verify if the entity(db or table)
-             is realy exists in the local server.
-             It return 1 if the entity exists or
-             0 if it not exists.
-           -------------------------------------------------
-        """      
+            This method verify if the entity(db or table)
+            is realy exists in the local server.
+            It return 1 if the entity exists or
+            0 if it not exists.
+
+            :param cursor: object of mySQL connection
+            :type cursor: object of mysql to make queries
+            :param entity: type of entity to be verifyed. db or tb
+            :type entity: caracter
+            :rtype: None
+        """ 
         ans = 0
         if entity is 'db':
             try:
-                cur.execute("SHOW DATABASES")
-                for db in cur:
-                    val = db.values()     # get dict of dbs
-                    list_db = list(val)   # convert  the dict to list of dbs
+                cursor.execute("SHOW DATABASES")
+                for db in cursor:
+                    dict_dbs = db.values()     # get dict of dbs
+                    list_db = list(dict_dbs)   # convert the dict to list of dbs
                     host_db = list_db[0]
-                    app_db = self.appdb
-                    if host_db == app_db:
+                    if host_db == self.appdb:
                         ans = 1
                         break
                     else:
@@ -142,15 +128,15 @@ class MySQLDBLib(object):
                 return ans
             except Exception as error:
                 print('Error by try to show all DB. \n Server said: {}'.format(error))
-        elif entity is 'tb':
+        
+        if entity is 'tb':
             try:
-                cur.execute("SHOW TABLES")
-                for tb in cur:
-                    val = tb.values()    # get a dict of a table
-                    list_tb = list(val)  # convert the dict to a list of table
+                cursor.execute("SHOW TABLES")
+                for tb in cursor:
+                    dict_tbs = tb.values()    # get a dict of a table
+                    list_tb = list(dict_tbs)  # convert the dict to a list of table
                     host_tb = list_tb[0]
-                    app_tb = self.dev_table
-                    if host_tb == app_tb:
+                    if host_tb == self.dev_table:
                         ans = 1
                         break
                     else:
@@ -162,24 +148,30 @@ class MySQLDBLib(object):
             pass
 
 
-    def create_db(self, cur_con, db):
+    def create_db(self, cursor, db):
         """
-           -------------------------------------------------
-             This method create a DB to be used on
-             this package. The db is define by you/user as
-             an attribute of this module(see on the to).
-           -------------------------------------------------
+            This method create a DB to be used on
+            this package. The db is define by you/user as
+            an attribute of this module(see on the to).
            
-           :type cur_con: cursor of mySQL connection
-           :type db: database name to be created
+           :param cursor: cursor of mySQL connection
+           :type cursor: object of mysql to make queries
+           :param db: database name to be created
+           :type db: caracter
            :rtype: None
         """
         try:
             sql = "CREATE DATABASE IF NOT EXISTS" + db
-            cur_con.execute(sql)
+            cursor.execute(sql)
             print("\n Database {} created successfully. \n ".format(db))
         except Exception as erro:
-            print('Error by try to CREATE DB: {}. \n Server reponse: {}'.format(self.appdb, erro))
+            print('Error by try to CREATE DB: {}'.format(
+                self.appdb)
+            )
+            print('\n Server reponse: {}'.format(
+                erro)
+            )
+
 
  
     def activate_db(self, cur_con, db=None):

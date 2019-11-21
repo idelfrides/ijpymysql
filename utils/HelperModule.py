@@ -1,7 +1,7 @@
 
 """ Helper module """
 
-import winsound
+# import winsound
 
 
 class HelperModule(object):
@@ -12,7 +12,7 @@ class HelperModule(object):
        --------------------------------------------------
     """
 
-    def app_info(self):
+    def app_information(self):
         """
             ---------------------------------------------------
              This method shows the propose of this application
@@ -58,9 +58,9 @@ class HelperModule(object):
               method of this module/class.
             ---------------------------------------------------
         """
-        frequency = 2500  # Set Frequency To 2500H Hertz
-        duration = 1000    # Set Duration To 1000 ms == 1 second
-        winsound.Beep(frequency, duration)
+        # frequency = 2500  # Set Frequency To 2500H Hertz
+        # duration = 1000    # Set Duration To 1000 ms == 1 second
+        # winsound.Beep(frequency, duration)
 
 
     def info_danger(self, code, entity):
