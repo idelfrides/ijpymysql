@@ -65,13 +65,11 @@ class HelperModule(object):
 
     def info_danger(self, code, entity):
         """
-            ---------------------------------------------------
-              This method shows a message alert to warn about a
-              danger actions - DROP DATABASE/TABLE
-              This method is only called by 'drop_struct'
-              method of ModuleMySQLdb module/class.
-              It return [1] to drop or [0] to quit
-            ---------------------------------------------------
+            This method shows a message alert to warn about a
+            danger actions - DROP DATABASE/TABLE
+            This method is called by 'drop_database and drop_table'
+            method of ModuleMySQLdb module/class.
+            It return [1] to drop or [0] to quit
         """
         
         self.beep_alert()
@@ -81,14 +79,14 @@ class HelperModule(object):
                **************************************************
                         WARNING: VERY DANGER ACTION
                **************************************************
-               You are trying to DROP a DATABASE, that a too 
+               You are trying to DROP a DATABASE, that is a too 
                DANGER action. If you do that, you will LOSE 
                every single TABLES on it and data definitely.
-               So, we recomend you to ABORT/ABANDON/QUIT 
+               So, we recomend you to ABANDON/QUIT 
                that operation.            
                '''
             print('\n {}'.format(infor))
-            print('\n You tring to DROP DATABASE {}'.format(entity))
+            print('\n\n You tring to DROP DATABASE {}'.format(entity))
 
             valid_ans = False
             while valid_ans is False:
@@ -97,23 +95,25 @@ class HelperModule(object):
                 if resp.isalpha() and resp == 'Y' or resp == 'y':
                     valid_ans = True     # a caracter informed Y or y
                     yes_drop = 1
-                elif resp.isalpha() and resp == 'N' or resp == 'n':
+                
+                if resp.isalpha() and resp == 'N' or resp == 'n':
                     valid_ans = True     # a caracter informed N or n
                     yes_drop = 0
-                elif resp.isnumeric():
+                
+                if resp.isnumeric():
                     valid_ans = False    # a number informed
                 else:
                     pass
             return yes_drop
 
-        elif code == 'tb':
+        if code == 'tb':
             infor = '''
                **************************************************
                         WARNING: VERY DANGER ACTION
                **************************************************
-                  You are trying to DROP a TABLE, that a too 
+                  You are trying to DROP a TABLE, that is a too 
                   DANGER action. If you do that, you will LOSE 
-                  all data/records on it definitely.
+                  all data/records on tha table definitely.
                   So, we recomend you to ABORT/QUIT 
                   that operation. In worse case, we recomend
                   TRUNCATE instead DROP operation.    
@@ -128,10 +128,12 @@ class HelperModule(object):
                 if resp.isalpha() and resp == 'Y' or resp == 'y':
                     valid_ans = True  # a caracter informed Y or y
                     yes_drop = 1
-                elif resp.isalpha() and resp == 'N' or resp == 'n':
+                
+                if resp.isalpha() and resp == 'N' or resp == 'n':
                     valid_ans = True  # a caracter informed N or n
                     yes_drop = 0
-                elif resp.isnumeric():
+                
+                if resp.isnumeric():
                     valid_ans = False  # a number informed
                 else:
                     pass

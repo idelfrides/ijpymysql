@@ -40,16 +40,14 @@ class MySQLDBLib(object):
         manage a db app and more other methods.
     """ 
     
-    appdb = 'py_app_db'                
-    dev_table = 'developer'            
-    # manager_table = 'manager'       
-    # supervisor_table = 'supervisor'  
-
-
     def __init__(self):
+        self.appdb = 'py_app_db'                
+        self.dev_table = 'developer'            
+        # manager_table = 'manager'       
+        # supervisor_table = 'supervisor' 
+        
         self.hmo = HelperModule()
         self.hmo.app_information()
-
 
     def set_connection(self):
         """
@@ -76,7 +74,6 @@ class MySQLDBLib(object):
         self.db_con = conection
         return conection, cursor
 
-    
     def set_connec_with_db(self):
         """
             This method set conection to the local server,
@@ -98,7 +95,6 @@ class MySQLDBLib(object):
         cursor = conection.cursor()
         return conection, cursor
 
-    
     def verification(self, cursor, entity):
         """
             This method verify if the entity(db or table)
@@ -147,7 +143,6 @@ class MySQLDBLib(object):
         else:
             pass
 
-
     def create_db(self, cursor, db):
         """
             This method create a DB to be used on
@@ -157,7 +152,7 @@ class MySQLDBLib(object):
            :param cursor: cursor of mySQL connection
            :type cursor: object of mysql to make queries
            :param db: database name to be created
-           :type db: caracter
+           :type db: string
            :rtype: None
         """
         try:
@@ -172,116 +167,122 @@ class MySQLDBLib(object):
                 erro)
             )
 
-
- 
-    def activate_db(self, cur_con, db=None):
+    def activate_db(self, cursor, db=None):
         """
-           -------------------------------------------------
             This method activate the DB to be used to test
             this package.
-           -------------------------------------------------
-           
-           :type cur_con: cursor of MySQL connection
-           :type db: data base name to be created
-           :rtype: None
+            
+            :param cursor: cursor of MySQL connection
+            :type cursor: onject of MySQL to make queries
+            :param db: database name to be created
+            :type db: string
+            :rtype: None
         """
+
         if db is not None:  # database passed
             try:
                 sql_use = " USE " + db
-                cur_con.execute(sql_use)
-                print('\n Database {} activated successfuly'.format(self.appdb))
+                cursor.execute(sql_use)
+                print('\n Database {} activated successfuly'.format(
+                    self.appdb)
+                )
                 return
             except Exception as erro:
-                print('\n Error try to activate DB {}. \n Server said: {}'.format(self.appdb, erro))
+                print('\n Error try to activate DB {}'.format(self.appdb))
+                print('\n Server said: {}'.format(erro))
                 
                 
-        if db is None:      
+        if db is None: # No database passed  
             try:
                 sql_use = " USE " + self.appdb
-                cur_con.execute(sql_use)
-                print('\n Database {} activated successfuly'.format(self.appdb))
+                cursor.execute(sql_use)
+                print('\n Default database {} activated successfuly'.format(
+                    self.appdb)
+                )
                 return
             except Exception as erro:
-                print('\n Error try to activate DB {}. \n Server said: {}'.format(self.appdb, erro))
+                print('\n Error try to activate DB {}'.format(self.appdb))
+                print('\n Server said: {}'.format(erro))
 
- 
-    def create_table(self, cur, mytb):
+    def create_table(self, cursor, mytb):
         """
-           --------------------------------------------------
-            This method create a table to the DB and be
-            used on this package. Al tables is defined by
+            This method create a table on the DB 
+            created befored or another one used 
+            on this package. All tables is defined by
             you/user like  an attribute of this
             module(see on the to).
-           --------------------------------------------------
-           
-           :type cur: cursor of MySQL connection
-           :type mydb: database name where a table will be created
-           :rtype: None
-        """
-        
-        # cursor_conec = self.set_conec_with_db()
 
-        sql_1 = "CREATE TABLE IF NOT EXISTS " + mytb
-        myfields = "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), gender ENUM('M', 'F'), company VARCHAR(255), age INT(3), salary FLOAT(7, 2))"
-        sql = sql_1 +  myfields
+            :param cursor: cursor of MySQL connection
+            :type cursor: onject of MySQL to make queries
+            :param mytb: tabla name where to be  created
+            :type mytb: string
+            :rtype: None
+        """
+
+        sql_tb = "CREATE TABLE IF NOT EXISTS " + mytb
+        tb_fields = "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), gender ENUM('M', 'F'), company VARCHAR(255), age INT(3), salary FLOAT(7, 2))"
+        sql = sql_tb +  tb_fields
         try:
-            cur.execute(sql)
+            cursor.execute(sql)
             print("\n Table {} created successfully. \n ".format(mytb))
         except Exception as erro:
-            print('\n Error by try to create the table: {}. \n Server reponse: {}'.format(mytb, erro))
+            print('\n Error by try to create the table: {}'.format(mytb))
+            print('\n Server reponse: {}'.format(erro))
 
-
-    def alter_table(self, cur, mytb, oper, atrib):
+    def alter_table(self, cursor, mytb, operation, attrib):
         """
-           -------------------------------------------------
-             This method alter a table present on DB.
-             The method provide 3 operations: add, drop
-             and modify. The tables and operation are
-             defined by you/user like an attribute(tables)
-             of this module(see on the to).
-           -------------------------------------------------
+            This method alter a table present on a DB.
+            The method provide 3 operations: add, drop
+            and modify. The tables and operation are
+            defined by you/user like an attribute(tables)
+            of this module(see on the to).
            
-           :type cur: cursor of MySQL connection
-           :type mydb: database name, witch contain the
-                       table that the attibute gonna be altered
-           :type oper: the operation to be perform over the attribute atrib
-           :type atrib: attibute will be altered
-           :rtype: None
+            :param cursor: object of MySQL connection
+            :type cursor: object of MySQL able to execute                 queries
+            :param mytb: table name to be altered
+            :type mytb: string
+            :param operation: the operation to be perform                      over the  attribute 'attrib'
+            :type operation: character
+            :param attrib: attibute will be altered
+            :type attrib: string
+            :rtype: None
         """
         
-        # cur = self.set_conec_with_db()
-        if oper is 'add':
-            sql_1 = " ALTER TABLE " + mytb
-            newattri = " ADD COLUMN " + atrib + " VARCHAR(255)"
-            sql = sql_1 + newattri
-            print(sql)
+        if operation is 'add':
+            sql_add = " ALTER TABLE " + mytb
+            new_attrib = " ADD COLUMN " + attrib + " VARCHAR(255)"
+            sql = sql_add + new_attrib
             try:
-                cur.execute(sql)
+                cursor.execute(sql)
                 print("\n Table {} altered successfully. \n ".format(mytb))
-            except Exception as erro:
-                print('\n Error by try to alter the table: {}. \n Server reponse: {}'.format(mytb, erro))
-        elif oper is 'drop':
-            sql_1 = "ALTER TABLE " + mytb
-            drop_attri = " DROP COLUMN " + atrib
-            sql = sql_1 + drop_attri
+                return
+            except Exception as error:
+                print('\n Error by try to alter the table: {}'.format(mytb))
+                print('\n Server reponse: {}'.format(error))
+        
+        if operation is 'drop':
+            sql_drop = "ALTER TABLE " + mytb
+            drop_attrib = " DROP COLUMN " + attrib
+            sql = sql_drop + drop_attrib
             try:
-                cur.execute(sql)
+                cursor.execute(sql)
                 print("\n Table {} altered successfully. \n ".format(mytb))
-            except Exception as erro:
-                print('\n Error by try to alter the table: {}. \n Server reponse: {}'.format(mytb, erro))
-        elif oper is 'mod':
-            sql_1 = "ALTER TABLE " + mytb
-            mod_attri = " MODIFY COLUMN " + atrib + " VARCHAR(255)"
-            sql = sql_1 + mod_attri
+                return
+            except Exception as error:
+                print('\n Error by try to alter the table: {}'.format(mytb))
+                print('\n Server reponse: {}'.format(error))
+         
+        if operation is 'mod':
+            sql_mod = "ALTER TABLE " + mytb
+            mod_attri = " MODIFY COLUMN " + attrib + " VARCHAR(255)"
+            sql = sql_mod + mod_attri
             try:
-                cur.execute(sql)
+                cursor.execute(sql)
                 print("\n Table {} altered successfully. \n ".format(mytb))
-            except Exception as erro:
-                print('\n Error by try to alter the table: {}. \n Server reponse: {}'.format(mytb, erro))
-        else:
-            pass
- 
-
+            except Exception as error:
+                print('\n Error by try to alter the table: {}'.format(mytb))
+                print('\n Server reponse: {}'.format(error))
+   
     def drop_struct(self, con, cur, code, entity):
         """        
            --------------------------------------------------
@@ -326,8 +327,6 @@ class MySQLDBLib(object):
         else:
             pass
 
-
-  
     def truncate(self, con, cur, mytb):
         """        
            --------------------------------------------------
@@ -349,8 +348,7 @@ class MySQLDBLib(object):
             print("\n Table {} TRUNCATED successfully. \n ".format(mytb))
         except Exception as error:
             print('\n Error by try to TRUNCATE the table: {}. \n Server reponse: {}'.format(mytb, error))
-
-            
+       
     def entity_verify(self, cur, entity):
         """
             -----------------------------------------------------
@@ -425,7 +423,6 @@ class MySQLDBLib(object):
                 print('Error by tring to REMOVE {} as UNIQUE. \n\n Server said: {}'.format(attr, error))
         else:
             pass
-
 
     def close_mysqlcon(self, con, cur):
         """
