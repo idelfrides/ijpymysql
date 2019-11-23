@@ -6,26 +6,15 @@
 
 class HelperModule(object):
     """
-       --------------------------------------------------
         This contain some auxiliar methods, witch used 
         to help user understanding what is going on.
-       --------------------------------------------------
     """
 
     def app_information(self):
-        """
-            ---------------------------------------------------
-             This method shows the propose of this application
-              by resume. That is his information.
-              This method is only called by 'thunder init'
-              method of ModuleMySQLdb module/class.
-            ---------------------------------------------------
-        """
-        
         info = ''' 
         ----------------------------------------------
              ====  BUILDING INFORMATION  ====
-            App name: ijpymysql
+            Package name: ijpymysql
             Description: module to handle data from MySQL 
             DB with python 3.6
             @utor: Engineer Idelfrides Jorge
@@ -48,30 +37,13 @@ class HelperModule(object):
 
         print('{}'.format(info))
 
-   
     def beep_alert(self):
-        """
-            ---------------------------------------------------
-              This method sounds an alert sound to warn about a
-              danger actions - DROP DATABASE/TABLE
-              This method is only called by 'info_danger'
-              method of this module/class.
-            ---------------------------------------------------
-        """
+        pass
         # frequency = 2500  # Set Frequency To 2500H Hertz
         # duration = 1000    # Set Duration To 1000 ms == 1 second
         # winsound.Beep(frequency, duration)
 
-
-    def info_danger(self, code, entity):
-        """
-            This method shows a message alert to warn about a
-            danger actions - DROP DATABASE/TABLE
-            This method is called by 'drop_database and drop_table'
-            method of ModuleMySQLdb module/class.
-            It return [1] to drop or [0] to quit
-        """
-        
+    def info_danger(self, code, entity):        
         self.beep_alert()
         yes_drop = 0
         if code == 'db':
@@ -141,17 +113,7 @@ class HelperModule(object):
         else:
             pass
 
-
-    def module_crud_info(self):
-        """
-            ---------------------------------------------------
-             This method shows the propose of the Crud_build class.
-             That is his information.
-             This method is only called by 'thunder init'
-             method of Crud_build module.
-            ---------------------------------------------------
-        """
-        
+    def module_crud_info(self):        
         info = 'This module going to help you to handling data of DB MySQL\n' \
                 'from FORM or TERMINAL RUN app. It contain all methods \n' \
                 ' to build a CRUD features .'

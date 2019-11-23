@@ -6,32 +6,17 @@ from utils import HelperModule
 class CrudManager(MySQLDBLib, HelperModule):
     """
     ---------------------------------------------
-       CRUD class(module) - contain all methods
+       CRUD class(object) - contain all methods
        to build a CRUD features
     ---------------------------------------------
-    """    
-
+    """
 
     def __init__(self):
-        """ Call module to show description of this module/class """
-        
         self.mdbo = MySQLDBLib()
         self.hmo = HelperModule()
-
         self.hmo.module_crud_info()
-    
-  
- 
-    def insert(self, con, cur, mytb, data):
-        """ 
-           ---------------------------------------------------
-             To create and record in any table, it's
-             required to insert data in a table to that
-             tuple. That's why INSERT method is necessary
-             in ths package.
-           ---------------------------------------------------
-         """
-     
+
+    def insert(self, con, cur, mytb, data):     
         try:
             sql = "INSERT INTO " + mytb + "(name, company, salary, role, adress) VALUES (%s, %s, %s, %s, %s)"
             myvalues = (data[0], data[1], data[2], data[3], data[4])
@@ -43,13 +28,8 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as erro:
             print('\n Error try to INSERT INTO the table: {}. \n Server reponse: {}'.format(mytb, erro))
 
- 
+
     def insert_many(self, con, cur, mytb, list_data):
-        """
-          -----------------------------------------------
-            INSERT many records on the table in one go. 
-          -----------------------------------------------
-        """
         try:
             i = 0
             j = 5
@@ -74,17 +54,8 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as error:
             print('\n Error try to INSERT INTO the table: {}. \n Server reponse: {}'.format(mytb, error))
 
-            
-    def read_one(self, cur, mytb):
-        """
-          ------------------------------------------
-            READ one record from the table.
-            It SELECT all records, than converter the
-            result set to a list of tuples. And than
-            get FIRT dev(tuple) of list.
-          ------------------------------------------
-        """
-        
+
+    def read_one(self, cur, mytb):        
         print('\n I AM GONNA READ ONE \n')
         try:
             sql = "SELECT * FROM " + mytb
@@ -94,15 +65,7 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as error:
             print('\n Error try to SELECT FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
 
-
-    def read_all(self, cur, mytb):
-        """
-           ------------------------------------------
-             READ all records from the table.
-             It SELECT all devs recorded on the table.
-           ------------------------------------------
-        """
-        
+    def read_all(self, cur, mytb):        
         # fetch -> buscar | fetches -> busca
         # fetchall() -> busca todas as linhas do conjunto de resultado de consulta sql
         # e retorna uma lista de tuplas. Caso o  result set for null,
@@ -117,17 +80,8 @@ class CrudManager(MySQLDBLib, HelperModule):
                 print('\n {}'.format(x))
         except Exception as error:
             print('\n Error try to SELECT FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
-            
-            
+    
     def read_one_filter(self, cur, mytb, dev_name):
-        """
-           --------------------------------------------
-             READ one record from the table.
-             It SELECT one specific record from table
-             by using the clause WHERE. It use filter
-             by 'name' of dev informed by user.
-           --------------------------------------------
-        """
         print('\n READ ONE: {} \n'.format(dev_name))
         try:
             sql = "SELECT * FROM " + mytb + " WHERE name = %s"
@@ -138,16 +92,7 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as error:
             print('\n Error try to SELECT FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
 
-
     def read_some_attr(self, cur, mytb, atr1, atr2):
-        """        
-           ------------------------------------------
-             READ one record from the table.
-             It SELECT some specific attibutes for all
-             developer, all record from table
-             The attibutes are informed by user.
-           ------------------------------------------
-        """
         print('\n I AM GONNA READ SOME \n')
         try:
             sql = " SELECT " + atr1 + "," + atr2 + " FROM " + mytb
@@ -158,18 +103,16 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as error:
             print('\n Error try to SELECT FROM table: {}. \n Server reponse: {}'.format(mytb, error))
 
-
-    
     def read_some_dev(self, cur, mytb, num_dev):
         """
            ---------------------------------------------
-             READ one record from the table.
-             It SELECT all attributes for some developer
-             The antity of record to be shown is
-             informed by user.
+            READ one record from the table.
+            It SELECT all attributes for some developer.
+            The table and number of records to be shown is
+            informed by user.
            ---------------------------------------------
         """
-        print('\n I AM GOING TO READ SOME \n')
+
         try:
             sql = "SELECT * FROM " + mytb
             cur.execute(sql)
@@ -177,78 +120,66 @@ class CrudManager(MySQLDBLib, HelperModule):
             for x in results:
                 print('\n {}'.format(x))
         except Exception as error:
-            print('\n Error try to SELECT FROM table: {}. \n Server reponse: {}'.format(mytb, error))
+            print('\n Error try to SELECT FROM table: {}'.format(mytb))
+            print('\n Server reponse: {}'.format(error))
 
-    
-    def update(self, con, cur, mytb, atr, new_value, myid):
-        """
-           ------------------------------------------------
-             UPDATE one atribute of a record. The method
-             takes six(6) arguments. conection | cursor |
-             table | atribute (column) | new value | id of
-             tuple(record)
-           ------------------------------------------------
-        """
+    def update(self, connec, cursor, tb, attr, new_value, id):
+
         try:
-            sql = "UPDATE " + mytb + " SET " + atr + " = %s  WHERE id = %s"
-            val = (new_value, myid)
-            cur.execute(sql, val)
-            con.commit()
-            print('\n Lines affected {}'.format(cur.rowcount))
+            sql = "UPDATE " + tb + " SET " + attr + " = %s  WHERE id = %s"
+            val = (new_value, id)
+            cursor.execute(sql, val)
+            connec.commit()
+            print('\n Lines affected {}'.format(cursor.rowcount))
         except Exception as error:
-            print('\n Error try to UPDATE table: {}. \n Server reponse: {}'.format(mytb, error))
+            print('\n Error try to UPDATE table: {}'.format(tb))
+            print('\n Server reponse: {}'.format(error))
 
-    def delete(self,  con, cur, mytb, thename):
-        """
-           ------------------------------------------------
-            DALETE one record(tuple) of table.
-            It takes four(4) arguments. conection | cursor |
-            table (column) | id of tuple(record)
-           ------------------------------------------------
-        """
+    def delete(self,  con, cur, mytb, dev_name):
         try:
             sql = " DELETE FROM " + mytb + " WHERE name = %s"
-            val = (thename)
+            val = (dev_name)
             cur.execute(sql, val)
             con.commit()
             print('\n Record deleted: {}'.format(cur.rowcount))
             self.restart_pk(con, cur, mytb)   # restar the pk
         except Exception as error:
-            print('\n Error try to DELETE FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
+            print('\n Error try to DELETE FROM  table: {}.'
+                  '\n Server reponse: {}'.format(mytb, error)
+            )
 
-
-    def custom_query(self, con, cur, mysql):
+    def custom_query(self, con, cur, query):
         """
            --------------------------------------------------
-            This method lets you free to make a custom query
+            This method lets you/user free to make a custom query
             to your DB. Yo by yourself write a SQL string
-            comand completely  and inform it to this method.
-            The method shows via run terminal  the result.
+            command completely  and inform it to this method,
+            to parameter 'query'(the last one).
+            The method shows via run terminal the result.
            --------------------------------------------------
         """
-        print('\n\n THIS IS YOUR OWM QUERY STRING \n')
+
         try:
-            cur.execute(mysql)
+            cur.execute(query)
             con.comit()
             print('\n\n QUERY SUCCESSFULL \n\n')
         except Exception as error:
-            print('\n Error by executing YOUR QUERY. \n Server said: {}'.format(error))
+            print('\n Error by executing YOUR QUERY. '
+                  '\n Server said: {}'.format(error)
+            )
 
-
-    def restart_pk(self, con, cur, mytb):
-        """
-           --------------------------------------------------
-             This method restart the PRIMARY KEY of a table.
-             That table is defined by user.
-           --------------------------------------------------
-        """
+    def restart_pk(self, connec, cursor, mytb):
         try:
             # sql = ' ALTER TABLE ' + mytb + 'AUTO_INCREMENT = 1'
             sql = ' ALTER TABLE ' + mytb + ' AUTO_INCREMENT = %s'
             start = 1
-            cur.execute(sql, start)
-            con.comit()
-            print('\n Primary key restarted SUCCESSFULY for table {}'.format(mytb))
+            cursor.execute(sql, start)
+            connec.comit()
+            print('\n Primary key restarted SUCCESSFULY for table {}'
+                .format(mytb)
+            )
         except Exception as error:
-            print('\n Error by try restarting the primary key of {}. \n\n Server said: {}'.format(mytb, error))
+            print('\n Error by try restarting the primary key of {}.'
+                  '\n\n Server said: {}'.format(mytb, error)
+            )
 

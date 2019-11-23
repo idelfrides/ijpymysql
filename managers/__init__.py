@@ -1,2 +1,2 @@
 from .crud_manager import CrudManager
-from .HandleDataFromTerminal import HandleDataFromTerminal
+from .HandleDataFromTerminal import DataFromTerminal

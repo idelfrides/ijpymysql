@@ -34,17 +34,15 @@ import pymysql
 
 class MySQLDBLib(HelperModule):    
     """
-        This class is the my library for python
+        This class is the library for python
         appications working with MySQL DB.
         The class will create all methods needed to
         manage a db app and more other methods.
     """ 
 
     def __init__(self):
-        self.appdb = 'py_app_db'                
-        self.dev_table = 'developer'            
-        # manager_table = 'manager'       
-        # supervisor_table = 'supervisor'  
+        self.appdb = 'ijpymysqlDB'
+        self.apptable = 'developer'
         self.hmo = HelperModule()
         self.hmo.app_information()
 
@@ -57,15 +55,17 @@ class MySQLDBLib(HelperModule):
             Return  'connection' with db and 'cursor' 
             to execute quereis.
             
-            :param self: auto reference parameter      
+            :param self: auto reference parameter
+
             :type self: python reserved word
+
             :rtype: connection with MySQL and cursor of that connection
         """
 
         conection = pymysql.Connect(
-            host = 'localhost',
+            host = 'localhost',     # 127.0.0.1
             user = 'root',
-            password = '',
+            password = '',   # 'mydbwm19',
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
         )
@@ -84,9 +84,9 @@ class MySQLDBLib(HelperModule):
         """      
         
         conection = pymysql.Connect(
-            host='localhost',
+            host='localhost',    # 127.0.0.1
             user='root',
-            password='',
+            password= '',  # 'mydbwm19',
             database = self.appdb,
             charset = 'utf8mb4',
             cursorclass = pymysql.cursors.DictCursor
@@ -94,61 +94,15 @@ class MySQLDBLib(HelperModule):
         cursor = conection.cursor()
         return conection, cursor
 
-    def verification(self, cursor, entity):
-        """
-            This method verify if the entity(db or table)
-            is realy exists in the local server.
-            It return 1 if the entity exists or
-            0 if it not exists.
-
-            :param cursor: object of mySQL connection
-            :type cursor: object of mysql to make queries
-            :param entity: type of entity to be verifyed. db or tb
-            :type entity: caracter
-            :rtype: None
-        """ 
-        ans = 0
-        if entity is 'db':
-            try:
-                cursor.execute("SHOW DATABASES")
-                for db in cursor:
-                    dict_dbs = db.values()     # get dict of dbs
-                    list_db = list(dict_dbs)   # convert the dict to list of dbs
-                    host_db = list_db[0]
-                    if host_db == self.appdb:
-                        ans = 1
-                        break
-                    else:
-                        ans = 0
-                return ans
-            except Exception as error:
-                print('Error by try to show all DB. \n Server said: {}'.format(error))
-        
-        if entity is 'tb':
-            try:
-                cursor.execute("SHOW TABLES")
-                for tb in cursor:
-                    dict_tbs = tb.values()    # get a dict of a table
-                    list_tb = list(dict_tbs)  # convert the dict to a list of table
-                    host_tb = list_tb[0]
-                    if host_tb == self.dev_table:
-                        ans = 1
-                        break
-                    else:
-                        ans = 0
-                return ans
-            except Exception as error:
-                print('Error by try to show all tables. \n Server said: {}'.format(error))
-        else:
-            pass
-
     def close_mysql_connec(self, connec, cursor):
         """
             This method close the connection with MySQL
             server. The con only or cursor only or both them
                      
             :type connec: connection with MySQL DB
+
             :type cursor: cursor of MySQL connection to make queries
+            
             :rtype: None
         """
         
@@ -159,4 +113,4 @@ class MySQLDBLib(HelperModule):
         except Exception as error:
             print('Error by tring to CLOSE the connection with MySQL server %s ', connec)
             print('\n\n Server said: {}'.format(error))
-
+    

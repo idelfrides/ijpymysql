@@ -17,9 +17,13 @@ class DBLib(HelperModule):
             an attribute of this module(see on the to).
            
            :param cursor: cursor of mySQL connection
+
            :type cursor: object of mysql to make queries
+
            :param db: database name to be created
+
            :type db: string
+           
            :rtype: None
         """
         try:
@@ -38,9 +42,13 @@ class DBLib(HelperModule):
             0 if it do not exists.
 
             :param cursor: object of mySQL connection
+
             :type cursor: object of mysql to make queries
+
             :param db: database to be verifyed.
+
             :type db: string
+
             :rtype: 1 = Yes or 0 = No
         """ 
 
@@ -68,9 +76,13 @@ class DBLib(HelperModule):
             to test this package.
             
             :param cursor: cursor of MySQL connection
+
             :type cursor: onject of MySQL to make queries
+
             :param db: database name to be created
+
             :type db: string
+            
             :rtype: None
         """
 

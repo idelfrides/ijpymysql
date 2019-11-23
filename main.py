@@ -3,15 +3,27 @@
  
 """ Test module """
 
+from ijpymysql import *
+
 
 class UseMysqlLib(object):
-    """ Test module """
+    """ Testing the library module  """
 
     def __init__(self):
-        pass
-
+        self.mysql_lib = MySQLDBLib()
+        self.db_lib = DBLib()
+        self.tb_lib = TableLib()
+    
     def run_lib(self):
-        pass
+        connec, cursor = self.mysql_lib.set_connection()
+
+        self.db_lib.create_db(cursor, self.mysql_lib.appdb)
+
+        self.db_lib.activate_db(cursor, self.mysql_lib.appdb )
+
+        print(connec)
+
+        print('\n\n I AM RUN LIB \n\n')
 
 
 def main():

@@ -16,7 +16,7 @@ The package  use **OOP** and  **Microserce Architecture** and organized like you
 
 
 ## Execution information
- App name: ijpymysql
+ Package name: ijpymysql
  
  Description: This project is mine one of monst important project. It'is a package to handle data on MySQL DB with python.
               
@@ -33,13 +33,11 @@ The package  use **OOP** and  **Microserce Architecture** and organized like you
  ## Technical Information   
  Python Interpreter:
  
-   --> Python 3.6.2
+   --> Python 3.7.3 by ENV
 
  Python driver for MySQL database:
  
    --> PyMySQL v0.9.3
-   
-   --> PyMySQLDB v0.0.2 (doesn't used)
    
  -- Coding: UTF-8 --
  
@@ -49,41 +47,42 @@ The package  use **OOP** and  **Microserce Architecture** and organized like you
  Follow next steps to use this package in your python project or to make a simple test and learn more.
  
  ### Step 1:
-Download **ijpymysql** and unpack the folder. Move package into your  python project.
+Install **ijpymysql** from pip 
+like: pip install ijpymysql
 
  ### Step 2:
-Read the file README fully, or for other way, you can do it here on github repository.
+Read the file README fully, or for other way, you can do it here on github repository or on the PyPi.
 After that, take a look to understand project structure, to understand mostly, the fields of the table.
-So, in this point, you may make some changes on it or create your own table to use.
+So, in this point, you may make some changes on it or create your own table to use [I recomend you the second option].
 
  ### Step 3:
-If you want, you can make some modifications to the package. If not, so you just need to use it like I am goint to tell you next.
-Create a python file  to be a main one. Create a method inside that file.This goint to be, therefore the main method of your python project. So, after that follow next steps. 
+Then, you may use it like I am goint to tell you next.
+Create a python file in root of your project, to be a main one. Then, create a method inside that file, that mrthod is goint to be, therefore the main method of your python project. So, after that follow next steps. 
 
  ### Step 4:
 Import modules inside **ijpymysql** and python time module you gonna use in your project like this.
-* Example: from ijpymysql import ModuleMySQLdb as mdb
-* Example: import time as t.
+* Do this: from ijpymysql import MySQLDBLib
+* Do this: import time.
 
  ### Step 5:
-Inside the main method you have to create an object of module you goint to need imediatily or for all modules, (I recomend the first way). Take a look a real example.
-* Example: mdbo = mdb.ModuleMySQLdb() 
+Inside the main method you have to create an object of module you goint to need imediatily or for all modules(I recomend the first way). Take a look a real example.
+* Example: mdbo = ModuleMySQLdb() 
 
  ### Step 6:
   Call the method to set up a conection to local server
-   * Example: conec, cursor = mdbo.set_conec_with_db()
+   * Example: 
+   connec, cursor = mdbo.set_connec_with_db()
 
     # ----------------------------------------------
-    #  set_conec_with_db()
+    #  set_connec_with_db()
     # -----
     # This method set up aconection to the localhost 
-    # (local server), with na 'database' created. 
-    # It need to set a DB.  This method is only 
-    # called on your main module/file, the is same 
-    # used to test the 'ijpymyql' package.
-    # Teturn 'conection' with db and 'cursor'
-    # to execute quireis.
+    # (local server), with an database already              # created. This argument is required.  This             # method is only called on your main module/file,       # the same used to test the 'ijpymysql' package.
+    # Return 'connection' with db and 'cursor'
+    # to execute queries.
     # ----------------------------------------------
+
+# TODO: i stoped here. Continue on step 7
 
  ### Step 7:
   Verify database existence. Make sure that db was successfuly created. For that, call method  verification(cursor, 'db').

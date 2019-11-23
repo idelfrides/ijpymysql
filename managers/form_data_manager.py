@@ -40,7 +40,7 @@ def handle_data_from():
 
     dblib = MySQLDBLib()
     cmo = CrudManager()
-    con, cur = MySQLDBLib().set_conec_with_db() 
+    con, cur = dblib.set_connec_with_db() 
 
-    cmo.insert(con, cur, dblib.dev_table, data)
+    cmo.insert(con, cur, dblib.apptable, data)
 
