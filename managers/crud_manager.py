@@ -1,6 +1,7 @@
 
 from mysql_lib import MySQLDBLib
 from utils import HelperModule
+from textwrap import dedent
 
 
 class CrudManager(MySQLDBLib, HelperModule):
@@ -29,33 +30,43 @@ class CrudManager(MySQLDBLib, HelperModule):
             print('\n Error try to INSERT INTO the table: {}. \n Server reponse: {}'.format(mytb, erro))
 
 
-    def insert_many(self, con, cur, mytb, list_data):
+    def insert_many(self, con, cur, tb, data_dev_list):
         try:
+            '''
             i = 0
             j = 5
             loop = True
-            mylist_values = list()
+            list_values = list()
             n = list_data.__len__()
             while loop is True:
                 data_dev = list_data[i:j]
-                tuple_data_dev = tuple(data_dev)  # transforme the list data_dev to a tuple
-                mylist_values.append(tuple_data_dev)
+                tuple_data_dev = tuple(data_dev) 
+                list_values.append(tuple_data_dev)
                 i = j
                 j = j + 5
                 if i is n:
                     loop = False
                 else:
                     pass
+            '''
+            list_values = list()
+            for data_dev in data_dev_list:
+                tuple_data_dev = tuple(data_dev) 
+                list_values.append(tuple_data_dev)
 
-            sql = "INSERT INTO " + mytb + "(name, company, salary, role, adress) VALUES (%s, %s, %s, %s, %s)"
-            cur.executemany(sql, mylist_values)
+            sql_insert = "INSERT INTO " + tb
+            fields = "(name, company, salary, role, adress)"
+            values = " VALUES (%s, %s, %s, %s, %s)"
+            sql = sql_insert + fields + values
+            cur.executemany(sql, list_values)
             con.commit()
             print(" {} Dev inserted.".format(cur.rowcount))
         except Exception as error:
-            print('\n Error try to INSERT INTO the table: {}. \n Server reponse: {}'.format(mytb, error))
+            print('\n Error try to INSERT INTO the table: {}'.format(tb))
+            print('\n Server reponse: {}'.format(error))
 
 
-    def read_one(self, cur, mytb):        
+    def read_one(self, cur, mytb):
         print('\n I AM GONNA READ ONE \n')
         try:
             sql = "SELECT * FROM " + mytb
@@ -65,7 +76,7 @@ class CrudManager(MySQLDBLib, HelperModule):
         except Exception as error:
             print('\n Error try to SELECT FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
 
-    def read_all(self, cur, mytb):        
+    def read_all(self, cursor, tb):
         # fetch -> buscar | fetches -> busca
         # fetchall() -> busca todas as linhas do conjunto de resultado de consulta sql
         # e retorna uma lista de tuplas. Caso o  result set for null,
@@ -73,13 +84,19 @@ class CrudManager(MySQLDBLib, HelperModule):
         # executemany(sql, val)
 
         try:
-            sql = "SELECT * FROM " + mytb
-            cur.execute(sql)
-            results = cur.fetchall()
-            for x in results:
-                print('\n {}'.format(x))
+            sql = "SELECT * FROM " + tb
+            cursor.execute(sql)
+            results = cursor.fetchall()
+            for value in results:
+                print('\n {}'.format(value))
         except Exception as error:
-            print('\n Error try to SELECT FROM  table: {}. \n Server reponse: {}'.format(mytb, error))
+            print(dedent("""
+
+                Error try to SELECT FROM  table: {}.
+                Server reponse: {}
+              
+              """.format(tb, error))
+            )
     
     def read_one_filter(self, cur, mytb, dev_name):
         print('\n READ ONE: {} \n'.format(dev_name))

@@ -10,18 +10,48 @@ class UseMysqlLib(object):
     """ Testing the library module  """
 
     def __init__(self):
-        self.mysql_lib = MySQLDBLib()
-        self.db_lib = DBLib()
-        self.tb_lib = TableLib()
+        self.mylibo = MySQLDBLib()
+        self.dblibo = DBLib()
+        self.tblibo = TableLib()
+        self.cmo = CrudManager()
     
+
     def run_lib(self):
-        connec, cursor = self.mysql_lib.set_connection()
+        connec, cursor = self.mylibo.set_connection()
 
-        self.db_lib.create_db(cursor, self.mysql_lib.appdb)
+        self.dblibo.create_db(cursor, self.mylibo.appdb)
+        
+        if not self.dblibo.db_verification(cursor, self.mylibo.appdb):
+            exit(0)
 
-        self.db_lib.activate_db(cursor, self.mysql_lib.appdb )
+        self.dblibo.activate_db(cursor, self.mylibo.appdb )
 
-        print(connec)
+        self.tblibo.alter_table(cursor, self.mylibo.apptable,
+            'drop',
+            'age'
+        )
+
+        self.tblibo.alter_table(cursor, self.mylibo.apptable,
+            'drop',
+            'gender'
+        )
+
+        self.tblibo.alter_table(cursor, self.mylibo.apptable,
+            'add',
+            'role'
+        )
+
+        self.tblibo.alter_table(cursor, self.mylibo.apptable,
+            'add',
+            'adress'
+        )
+
+        # ---------- CRUD OPERARION ----------- 
+
+        self.cmo.read_all(cursor, self.mylibo.apptable)
+
+        self.mylibo.close_mysql_connec(connec, cursor)
+        
 
         print('\n\n I AM RUN LIB \n\n')
 

@@ -28,6 +28,7 @@
  ------------------------------------------------------
 """
 
+from textwrap import dedent
 from utils import HelperModule
 import pymysql
 
@@ -45,6 +46,7 @@ class MySQLDBLib(HelperModule):
         self.apptable = 'developer'
         self.hmo = HelperModule()
         self.hmo.app_information()
+
 
     def set_connection(self):
         """
@@ -111,6 +113,13 @@ class MySQLDBLib(HelperModule):
             connec.close()
             print('\n MySQL Connection is closed successfuly \n')
         except Exception as error:
-            print('Error by tring to CLOSE the connection with MySQL server %s ', connec)
+            print(dedent("""
+
+                Error by tring to CLOSE the
+                connection with MySQL server {}
+                
+                """.format(connec))
+            )
             print('\n\n Server said: {}'.format(error))
-    
+
+

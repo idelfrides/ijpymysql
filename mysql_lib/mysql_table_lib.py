@@ -5,12 +5,34 @@
 from utils import HelperModule
 
 
-class TableLib(HelperModule):    
-    """ Table lib object """ 
+class TableLib(HelperModule):
+    """ Table lib object """
 
     def __init__(self):
         self.hmo = HelperModule()
 
+    def show_all_tb(self, cursor):
+        """
+            This method show all tables
+            in the local server.
+
+            :param cursor: object of mySQL connection
+            :type cursor: object of mysql to make queries
+    
+            :rtype: none
+        """ 
+
+        try:
+            cursor.execute("SHOW TABLES")
+            for tb in cursor:
+                dict_tbs = tb.values()
+                list_tb = list(dict_tbs)
+                print(list_tb[0])       
+        except Exception as error:
+            print('Error by try to show all tables. \n Server said: {}'.format(
+                error)
+            )
+    
     def tb_verification(self, cursor, tb):
         """
             This method verify if the table
@@ -41,8 +63,8 @@ class TableLib(HelperModule):
             print('Error by try to show all tables. \n Server said: {}'.format(
                 error)
             )
-    
-    def create_table(self, cursor, mytb):
+
+    def create_table(self, cursor, tb):
         """
             This method create a table on the DB 
             created befored or another one used 
@@ -57,14 +79,14 @@ class TableLib(HelperModule):
             :rtype: None
         """
 
-        sql_tb = "CREATE TABLE IF NOT EXISTS " + mytb
+        sql_tb = "CREATE TABLE IF NOT EXISTS " + tb
         tb_fields = "(id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255), gender ENUM('M', 'F'), company VARCHAR(255), age INT(3), salary FLOAT(7, 2))"
         sql = sql_tb +  tb_fields
         try:
             cursor.execute(sql)
-            print("\n Table {} created successfully. \n ".format(mytb))
+            print("\n Table {} created successfully. \n ".format(tb))
         except Exception as erro:
-            print('\n Error by try to create the table: {}'.format(mytb))
+            print('\n Error by try to create the table: {}'.format(tb))
             print('\n Server reponse: {}'.format(erro))
 
     def alter_table(self, cursor, mytb, operation, attrib):

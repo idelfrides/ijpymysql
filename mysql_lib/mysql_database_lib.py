@@ -2,9 +2,11 @@
 #!/usr/bin/env python
 # -*- encoding: utf-8 -*-
 
+from textwrap import dedent
 from utils import HelperModule
 
-class DBLib(HelperModule):    
+
+class DBLib(HelperModule):
     """ Database lib object"""
 
     def __init__(self):
@@ -45,31 +47,60 @@ class DBLib(HelperModule):
 
             :type cursor: object of mysql to make queries
 
-            :param db: database to be verifyed.
+            :param db: database to be verifyed. 
 
             :type db: string
 
             :rtype: 1 = Yes or 0 = No
-        """ 
+        """
 
-        ans = 0
+        ans = False
         try:
             cursor.execute("SHOW DATABASES")
             for db in cursor:
-                dict_dbs = db.values()     # get dict of dbs
-                list_db = list(dict_dbs)   # convert the dict to list of dbs
+                dict_dbs = db.values()
+                list_db = list(dict_dbs)
                 host_db = list_db[0]
                 if host_db == db:
-                    ans = 1
-                    break            
+                    ans = True
+                    break
                 if host_db != db:
-                    ans = 0
+                    ans = False
             return ans
         except Exception as error:
-            print('Error by try to show all DB. \n Server said: {}'.format(
-                error)
+            print(dedent("""
+                    Error by try to show all DB.
+                    Server said: {}
+                """.format(error))
             )
-        
+
+    def show_all_db(self, cursor):
+        """
+            This method show all db
+            in the local server.
+            It return 1 if the db exists or
+            0 if it do not exists.
+
+            :param cursor: object of mySQL connection
+
+            :type cursor: object of mysql to make queries
+
+            :rtype: none
+        """
+
+        try:
+            cursor.execute("SHOW DATABASES")
+            for db in cursor:
+                dict_dbs = db.values()  
+                list_db = list(dict_dbs)
+                print(list_db[0])
+        except Exception as error:
+            print(dedent(""" 
+                    Error by try to show all DB. 
+                    Server said: {}
+                """.format(error))
+            )
+
     def activate_db(self, cursor, db):
         """
             This method activate the DB to be used 

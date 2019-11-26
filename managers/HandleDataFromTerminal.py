@@ -12,165 +12,74 @@ class DataFromTerminal(object):
     """
 
     def __init__(self):
-        self.sleep = 7
+        self.sleep = 7            # seconds
         self.module_information()
 
     def data_from_terminal(self):
-        print(' ------------------------------'
-              '\n\t INFORMING DATA FOR ONE DEV '
-              '\n ------------------------------\n')
-        try:
-            name = input('\n Enter a name:  ')
-        except KeyboardInterrupt as kbi_exc:
-            print('\n Program interrupted by user\n {}'
-                .format(kbi_exc)
-            )
-            exit(0)
-        else:
-            if not self.attrib_validation(name, 'alpha'):
-                self.show_warning('name')
-                self.data_from_terminal()           
+        print(dedent("""
+            ---------------------------------
+               INFORMING DATA FOR ONE DEV
+            ---------------------------------
 
-        try:
-            company = input('\n Enter a company:  ')
-        except KeyboardInterrupt as kbi_exc:
-            print('\n Program interrupted by user \n {}'
-                .format(kbi_exc)
-            )
-            exit(0)
-        else:
-            if not self.attrib_validation(company, 'alpha'):
-                self.show_warning('company')
-                self.data_from_terminal()  
+            """)
+        )
+        
+        ind = 0
+        dev_data = list()
+        attr_type = [
+            'alpha',
+            'alpha',
+            'numeric',
+            'alpha',
+            'alphanum'
+        ]
+        
+        for attr in ['name', 'company', 'salary', 'role', 'adress']:
+            try:
+                attr_value = input('\n Entert the %s:  ',attr)
+            except KeyboardInterrupt as kbi_exc:
+                print('\n Program interrupted by user \n {}'
+                    .format(kbi_exc)
+                )
+                exit(0)
+            else:
+                if not self.attrib_validation(attr_value, attr_type[ind]):
+                    self.show_warning(attr)
+                    self.data_from_terminal()
 
-        try:
-            salary = float(input('\n Entry a salary:  '))
-        except KeyboardInterrupt as kbi_exc:
-            print('\n Program interrupted by user \n {}'
-                .format(kbi_exc)
-            )
-            exit(0)
-        else:
-            if not self.attrib_validation(salary, 'numeric'):
-                self.show_warning('salary')
-                self.data_from_terminal()
-
-        try:
-            role = input('\n Enter a role:  ')
-        except KeyboardInterrupt as kbi_exc:
-            print('\n Program interrupted by user \n {}'
-                .format(kbi_exc)
-            )
-            exit(0)
-        else:
-            if not self.attrib_validation(role, 'alpha'):
-                self.show_warning('rola')
-                self.data_from_terminal()
-
-        try:
-            adress = input('\n Enter a adress:  ')
-        except KeyboardInterrupt as kbi_exc:
-            print('\n Program interrupted by user \n {}'
-                .format(kbi_exc)
-            )
-            exit(0)
-        else:
-            if not self.attrib_validation(adress, 'alphanum'):
-                self.show_warning('adress')
-                self.data_from_terminal()
-
-        data = list()
-
-        data.append(name)
-        data.append(company)
-        data.append(salary)
-        data.append(role)
-        data.append(adress)
-
+            dev_data.append(attr_value)
+            ind += 1
+        
         #        name, company, salary, role, adress
         # return name, company, salary, funcao, adress
-        return data
+        return dev_data
 
     def data_from_terminal_many(self):
-        print(' ------------------------------'
-              '\n INFORMING DATA FOR MANY DEV '
-              '\n ------------------------------')
+        print(dedent("""
+            ------------------------------------
+                INFORMING DATA FOR MANY DEV
+            ------------------------------------
+
+            """)
+        )
+        
         records = self.define_records_number() 
-        dev_data = list()
+
+        all_dev_data = list()
+        
         for ind in range(records):
-            print('\n--------------------------------')
-            print('\t DATA FOR DEV {}'.format(ind+1))
-            print('--------------------------------\n')
+            print(dedent("""
+                --------------------------------
+                        DATA FOR DEV {}
+                --------------------------------
+                
+                """.format(ind+1))
+            )
             
-            try:
-                name = input('\n Enter a name:  ')
-            except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user\n {}'
-                    .format(kbi_exc)
-                )
-                exit(0)
-            else:
-                if not self.attrib_validation(name, 'alpha'):
-                    self.show_warning('name')
-                    self.data_from_terminal_many() 
-             
-            try:
-                company = input('\n Entry the company:  ')
-            except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user\n {}'
-                    .format(kbi_exc)
-                )
-                exit(0)
-            else:
-                if not self.attrib_validation(company, 'alpha'):
-                    self.show_warning('company')
-                    self.data_from_terminal_many() 
-           
-            try:
-                salary = float(input('\n Entry the salary:  '))
-            except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user\n {}'
-                    .format(kbi_exc)
-                )
-                exit(0)
-            else:
-                if not self.attrib_validation(salary, 'numeric'):
-                    self.show_warning('salary')
-                    self.data_from_terminal_many() 
+            one_dev_data = self.data_from_terminal()
+            all_dev_data.append(one_dev_data)
 
-           
-            try:
-                role = input('\n Entry the role:  ')
-            except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user\n {}'
-                    .format(kbi_exc)
-                )
-                exit(0)
-            else:
-                if not self.attrib_validation(role, 'alpha'):
-                    self.show_warning('role')
-                    self.data_from_terminal_many() 
-
-            
-            try:
-                adress = input('\n Entry the adress:  ')
-            except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user\n {}'
-                    .format(kbi_exc)
-                )
-                exit(0)
-            else:
-                if not self.attrib_validation(adress, 'alphanum'):
-                    self.show_warning('adress')
-                    self.data_from_terminal_many() 
-            
-            dev_data.append(name)
-            dev_data.append(company)
-            dev_data.append(salary)
-            dev_data.append(role)
-            dev_data.append(adress)
-            
-        return dev_data
+        return all_dev_data
 
     def define_records_number(self):
         max_amount = 100        
@@ -229,21 +138,22 @@ class DataFromTerminal(object):
               '\n {}'.format(info))
         print('\n ------------------------------------------------\n')
 
-    # TODO: finish this method
+    # TODO: finish this method 
     def attrib_validation(self, attribute, code):
+        """ Return True or False """
+
         yes_attr = False
 
         if code == 'alpha':
-            x = re.match('[a-zA-Z]', attribute)
-            if x: 
-                yes_attr = True          
-        if code == 'numeric':
-            x= re.match('\rd', attribute)
-            if x:
+            if re.match('[a-zA-Z]', attribute):
                 yes_attr = True
+
+        if code == 'numeric':
+            if re.match('\rd', attribute):
+                yes_attr = True
+            
         if code == 'alphanum':
-            x = re.match('[a-zA-Z]+\rd', attribute)
-            if x:
+            if re.match('[a-zA-Z]+\rd', attribute):
                 yes_attr = True
         
         return yes_attr
@@ -253,11 +163,11 @@ class DataFromTerminal(object):
         print(dedent("""
             ======= WARNING ========
             
-            Invalid value to {}!!!
+            Invalid value to {0}!!!
             You need to inform other value 
-            for attribute {}.
+            for attribute {0}.
             
-            """.format(attribute, attribute))
+            """.format(attribute))
         )  
         print('*'*60)
         time.sleep(self.sleep)
