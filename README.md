@@ -89,7 +89,10 @@ Inside the main method you have to create an object of module you goint to need 
     #  set_connec_with_db()
     # --------
     # This method set up aconection to the localhost 
-    # (local server), with an database already       # created. This argument is required.  This      # method is only called on your main module/file,# the same used to test the 'ijpymysql' package.
+    # (local server), with an database already 
+    # created. This argument is required. 
+    # This method is only called on your main module/file,
+    # the same used to test the 'ijpymysql' package.
     # Return 'connection' with db and 'cursor'
     # to execute queries.
     # -------------------------------------------------
@@ -115,16 +118,17 @@ Inside the main method you have to create an object of module you goint to need 
     # ----------------------------------------------
   
   Make sure that your db was successfuly created.For that, call method  db_verification(cursor, db).
-  * Example: resp = dblibo.db_verification(cursor, 'db_name')
+     * Example: resp = dblibo.db_verification(cursor, 'db_name')
    
-    # ----------------------------------------------
-    # db_verification(cursor, db)
-    # -------
-    # This method verify if the db is realy
-    # exists in the local server.
-    # It return 1 if the db exists or
-    # 0 if not exists.
-    # ----------------------------------------------
+   
+     # ----------------------------------------------
+     # db_verification(cursor, db)
+     # -------
+     # This method verify if the db is realy
+     # exists in the local server.
+     # It return 1 if the db exists or
+     # 0 if not exists.
+     # ----------------------------------------------
   
   
  ### Step 8:
