@@ -64,23 +64,22 @@ Inside the main method you have to create an object of module you goint to need 
 
  ### Step 6:
   Call the method to set up a conection to local server
-  * Example: 
-  connec, cursor = mylibo.set_connection()
-  or
-  connec, cursor = mdbo.set_connec_with_db() [1]
-  WARNING: do not execute [1] option. Do the first one.
-  Do this only if you sure that database already exists.
-  
-    # -----------------------------------------------
-    #  set_connection()
-    # --------
-    # This method set a conection to the loc#server,
-    # with no 'database' created yet.
-    # This method is only called on your ma#module,
-    # the same used to test the 'ijpymyq#package.
-    # Return  'connection' with db a#'cursor' 
-    # to execute quereis.
-    # -----------------------------------------------
+    * Example: 
+      connec, cursor = mylibo.set_connection()  or
+      connec, cursor = mdbo.set_connec_with_db() [1]
+      WARNING: do not execute [1] option. Do the first one.
+      Do this only if you sure that database already exists.
+
+     # -----------------------------------------------
+     #  set_connection()
+     # --------
+     # This method set a conection to the locol server,
+     # with no 'database' created yet.
+     # This method is only called on your main module,
+     # the same used to test the 'ijpymysql' package.
+     # Return  'connection' with db and 'cursor' 
+     # to execute quereis.
+     # -----------------------------------------------
     
 
   If you really sure about a database existence, do this. This is a particular case.
