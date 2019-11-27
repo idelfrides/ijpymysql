@@ -138,22 +138,21 @@ class DataFromTerminal(object):
               '\n {}'.format(info))
         print('\n ------------------------------------------------\n')
 
-    # TODO: finish this method 
     def attrib_validation(self, attribute, code):
         """ Return True or False """
 
         yes_attr = False
 
         if code == 'alpha':
-            if re.match('[a-zA-Z]', attribute):
+            if attribute.isalpha():
                 yes_attr = True
 
         if code == 'numeric':
-            if re.match('\rd', attribute):
+            if attribute.isnumeric():
                 yes_attr = True
             
         if code == 'alphanum':
-            if re.match('[a-zA-Z]+\rd', attribute):
+            if re.match(r'\w+', attribute):
                 yes_attr = True
         
         return yes_attr
