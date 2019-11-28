@@ -36,7 +36,10 @@ class DataFromTerminal(object):
         
         for attr in ['name', 'company', 'salary', 'role', 'adress']:
             try:
-                attr_value = input('\n Enter the %s:  ',attr)
+                print('\n Getting a value to attribute {}'
+                    .format(attr)
+                )
+                attr_value = input('\n Enter the value:  ')
             except KeyboardInterrupt as kbi_exc:
                 print('\n Program interrupted by user \n {}'
                     .format(kbi_exc)

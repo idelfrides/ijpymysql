@@ -41,7 +41,7 @@ def data_from_terminal():
         ind += 1
         
     #        name, company, salary, role, adress
-    # return name, company, salary, funcao, adress
+    # return name, company, salary, role, adress
     return dev_data
 
 
