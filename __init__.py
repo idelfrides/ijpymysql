@@ -10,7 +10,7 @@ __all__ = ['MySQLDBLib', 'DBLib', 'TableLib']
 # -------- MANAGERS ---------
 
 from .managers import CrudManager
-# from .managers import DataFromTerminal
+from .managers import DataFromTerminal
 
 # -------- UTILITARIES ---------
 

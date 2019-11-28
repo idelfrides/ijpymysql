@@ -36,7 +36,7 @@ class DataFromTerminal(object):
         
         for attr in ['name', 'company', 'salary', 'role', 'adress']:
             try:
-                attr_value = input('\n Entert the %s:  ',attr)
+                attr_value = input('\n Enter the %s:  ',attr)
             except KeyboardInterrupt as kbi_exc:
                 print('\n Program interrupted by user \n {}'
                     .format(kbi_exc)
@@ -129,8 +129,12 @@ class DataFromTerminal(object):
         return devs
 
     def module_information(self):
-        info = 'This module going to help you to entry data to \n this app' \
-               'from terminal. It is accept to entry one or many \n developers at the same time.'
+        info = '''
+            This module going to help you to
+            entry data to this app from terminal.
+            It is accept to entry one or many
+            developers at the same time.
+        '''
 
         print('\n ------------------------------------------------'
               '\n MODULE INFORMATION -> HANDLE DATA VIA TERMINAL'
@@ -144,7 +148,7 @@ class DataFromTerminal(object):
         yes_attr = False
 
         if code == 'alpha':
-            if attribute.isalpha():
+            if re.match('[a-z]', attribute):
                 yes_attr = True
 
         if code == 'numeric':

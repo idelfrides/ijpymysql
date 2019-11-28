@@ -4,7 +4,7 @@
 """ Test module """
 
 from ijpymysql import *
-
+from textwrap import dedent
 
 class UseMysqlLib(object):
     """ Testing the library module  """
@@ -14,6 +14,7 @@ class UseMysqlLib(object):
         self.dblibo = DBLib()
         self.tblibo = TableLib()
         self.cmo = CrudManager()
+        self.data = DataFromTerminal()
     
 
     def run_lib(self):
@@ -54,13 +55,14 @@ class UseMysqlLib(object):
         
 
         print('\n\n I AM RUN LIB \n\n')
-        
 
+    
+    
 
 def main():
     mysql_obj = UseMysqlLib()
     mysql_obj.run_lib()
-
+    
 
 if __name__ == "__main__":
     main()
