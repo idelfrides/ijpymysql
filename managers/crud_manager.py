@@ -32,23 +32,6 @@ class CrudManager(MySQLDBLib, HelperModule):
 
     def insert_many(self, con, cur, tb, data_dev_list):
         try:
-            '''
-            i = 0
-            j = 5
-            loop = True
-            list_values = list()
-            n = list_data.__len__()
-            while loop is True:
-                data_dev = list_data[i:j]
-                tuple_data_dev = tuple(data_dev) 
-                list_values.append(tuple_data_dev)
-                i = j
-                j = j + 5
-                if i is n:
-                    loop = False
-                else:
-                    pass
-            '''
             list_values = list()
             for data_dev in data_dev_list:
                 tuple_data_dev = tuple(data_dev) 

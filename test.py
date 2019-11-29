@@ -37,7 +37,7 @@ def data_from_terminal():
             if not data.attrib_validation(attr_value, attr_type[ind]):
                 data.show_warning(attr)
                 data_from_terminal()
-        dev_data.append(attr_value)
+        dev_data.append(attr_value.strip())
         ind += 1
         
     #        name, company, salary, role, adress
@@ -47,6 +47,6 @@ def data_from_terminal():
 
 if __name__ == "__main__":
     d = data_from_terminal()
-    print(d)
+    print('\n\n\n DATA:  ', d)
     print('\n\n')
 
