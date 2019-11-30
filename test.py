@@ -45,8 +45,40 @@ def data_from_terminal():
     return dev_data
 
 
+def data_from_terminal_many():
+
+    data = DataFromTerminal()
+
+    print(dedent("""
+        ------------------------------------
+            INFORMING DATA FOR MANY DEV
+        ------------------------------------
+
+        """)
+    )
+        
+    records = data.define_records_number() 
+
+    all_dev_data = list()
+        
+    for ind in range(records):
+        print(dedent("""
+            --------------------------------
+                    DATA FOR DEV {}
+            --------------------------------
+            
+            """.format(ind+1))
+        )
+            
+        one_dev_data = data_from_terminal()
+        all_dev_data.append(one_dev_data)
+
+    return all_dev_data
+
+
+
 if __name__ == "__main__":
-    d = data_from_terminal()
+    d = data_from_terminal_many()
     print('\n\n\n DATA:  ', d)
     print('\n\n')
 

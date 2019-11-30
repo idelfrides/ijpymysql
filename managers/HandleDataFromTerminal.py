@@ -12,7 +12,7 @@ class DataFromTerminal(object):
     """
 
     def __init__(self):
-        self.sleep = 7            # seconds
+        self.sleep = 7              # seconds
         self.module_information()
 
     def data_from_terminal(self):
@@ -87,11 +87,13 @@ class DataFromTerminal(object):
         max_amount = 100        
         yes_n = False
         while yes_n is False:
-            input('\n Amount of dev be bnetween 2 <= n <= %d', max_amount)
+            print('\n Amount of dev be between [2, {}]'
+                .format(max_amount)
+            )
             try:
                 devs = int(input('\n Enter amount of dev:   '))
             except KeyboardInterrupt as kbi_exc:
-                print('\n Program interrupted by user {}'
+                print('\n\n\n Program interrupted by user {}'
                     .format(kbi_exc)
                 )
                 time.sleep(self.sleep)
@@ -102,16 +104,16 @@ class DataFromTerminal(object):
                     ======= WARNING ========
                     
                     Invalid value!!!
-                    You entered a caracter --> {}
+                    You entered a caracter.
                     
-                    server said: {}                
+                    Server said: {}                
                       
-                    """.format(devs, excep))
+                    """.format(excep))
                 )                
                 print('*'*60)
                 time.sleep(7)
             else:
-                if devs >= 2:
+                if 2 <= devs <= max_amount:
                     yes_n = True
                     break
                 if devs < 2:
