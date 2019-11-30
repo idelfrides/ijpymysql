@@ -67,7 +67,6 @@ Inside the main method you have to create an object of module you goint to need 
     * Example: 
       connec, cursor = mylibo.set_connection() [1] or
       connec, cursor = mylibo.set_connec_with_db() [2].
-
       WARNING: Do not execute option [2], do the first one [1].
       Do this [2] only if you sure that database already exists.
 
