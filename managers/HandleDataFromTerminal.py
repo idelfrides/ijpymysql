@@ -49,10 +49,9 @@ class DataFromTerminal(object):
                 if not self.attrib_validation(attr_value, attr_type[ind]):
                     self.show_warning(attr)
                     self.data_from_terminal()
-
             dev_data.append(attr_value.strip())
             ind += 1
-        
+
         #        name, company, salary, role, adress
         # return name, company, salary, funcao, adress
         return dev_data
@@ -151,8 +150,7 @@ class DataFromTerminal(object):
         yes_attr = False
 
         if code == 'alpha':
-            attribute = attribute.strip()
-            if re.match('[a-z]', attribute):
+            if re.match('[a-z]', attribute.strip()):
                 yes_attr = True
 
         if code == 'numeric':
@@ -161,12 +159,10 @@ class DataFromTerminal(object):
                 yes_attr = True
             
         if code == 'alphanum':
-            attribute = attribute.strip()
-            if re.match(r'\w+', attribute):
+            if re.match(r'\w+', attribute.strip()):
                 yes_attr = True
         
         return yes_attr
-
 
     def show_warning(self, attribute):
         print('*'*60)
