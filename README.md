@@ -65,10 +65,11 @@ Inside the main method you have to create an object of module you goint to need 
  ### Step 6:
   Call the method to set up a conection to local server
     * Example: 
-      connec, cursor = mylibo.set_connection()  or
-      connec, cursor = mdbo.set_connec_with_db() [1]
-      WARNING: do not execute [1] option. Do the first one.
-      Do this only if you sure that database already exists.
+      connec, cursor = mylibo.set_connection() [1] or
+      connec, cursor = mylibo.set_connec_with_db() [2].
+
+      WARNING: Do not execute option [2], do the first one [1].
+      Do this [2] only if you sure that database already exists.
 
      # -----------------------------------------------
      #  set_connection()
